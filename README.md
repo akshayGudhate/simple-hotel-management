@@ -9,7 +9,7 @@ A small project for managing the simple hotels and the rates.
 
 
 ## Features
-- _Room Rate_ : add, update, delete, list
+- _Room Rate_: add, update, delete, list
 - _Overridden Rate_: add, update, delete, list
 - _Discount_: create, update, delete, list
 - _Discounted Rate_: map, list
@@ -84,17 +84,17 @@ Views:
 ```
 
 ## Engineering Design Decisions
-- For more detailed explanation, please check  **NOTE** section in the code file.
+- For a more detailed explanation, please check  the **NOTE** section in the code file.
 ```js
 // NOTE:
 // example explanation
 ```
 
-1. Added `time_stamp` in the table, so we can track or analyse on the basis of time.
+1. Added `time_stamp` in the table, so we can track or analyze based on time.
 2. Created `view` to remove the redundancy of using the same join and the same information everywhere.
 3. We could have used `Materialized Views` for the `rate calculations` as a caching. But we need to refresh the view periodically to maintain consistency.
 4. Created index on the `overridden_room_rates` and `discount_room_rates` table for efficiently getting the `discount rate calculations` and the search by `stay_date`.
-5. Using index helped us in reading data faster, you can see the difference in the costs for the same query using `EXPLAIN ANALYSE`.
+5. Using an index helped us in reading data faster, you can see the difference in the costs for the same query using `EXPLAIN ANALYSE`.
 
     * Query without index:
     ```sql
@@ -198,7 +198,7 @@ The project makes use of node and its package manager to help you out carrying s
 $ git clone https://github.com/akshayGudhate/simple-hotel-management.git
 ```
 
-### Create .env file and add below variables
+### Create a .env file and add the below variables
 
 ```console
 $ cat <<EOL > .env
@@ -232,7 +232,7 @@ Run the application which will be listening on port `8080`. There are two ways t
 
 ## API's
 
-Below is a list of API endpoints with their respective input and output. Please note that the application needs to be running for the following endpoints to work.
+Below is a list of API endpoints with their respective input and output. FYI, the application needs to be running for the following endpoints to work.
 ---------------------------------------------------------------------------------------------------------------------------------------
 
 #### Add new room
@@ -260,7 +260,7 @@ Parameters
 | `defaultRate` | Yes      | Default room rate | Any Positive Integer - `100` |
 
 
-Example of output - when the room added successfully
+Example of output - when the room is added successfully
 
 `HTTP Status Code: 201`
 
@@ -279,7 +279,7 @@ Example of output - on invalid default rate
 
 ```json
 {
-    "info": "Invalid room rate value, please enter value greater than 0",
+    "info": "Invalid room rate value, please enter a value greater than 0",
     "data": null
 }
 ```
@@ -319,7 +319,7 @@ Parameters
 | `defaultRate` | Yes      | Default room rate | Any Positive Integer - `100` |
 
 
-Example of output - update successful
+Example of output - update successfully
 
 `HTTP Status Code: 200`
 
@@ -336,7 +336,7 @@ Example of output - on invalid default rate
 
 ```json
 {
-    "info": "Invalid room rate value, please enter value greater than 0",
+    "info": "Invalid room rate value, please enter a value greater than 0",
     "data": null
 }
 ```
@@ -472,7 +472,7 @@ Parameters
 | `stayDate`       | Yes      | Date of stay        | `2024-06-22`                 |
 
 
-Example of output - when the overridden room rate added successfully
+Example of output - when the overridden room rate is added successfully
 
 `HTTP Status Code: 201`
 
@@ -491,12 +491,12 @@ Example of output - on invalid overridden rate
 
 ```json
 {
-    "info": "Invalid room rate value, please enter value greater than 0",
+    "info": "Invalid room rate value, please enter a value greater than 0",
     "data": null
 }
 ```
 
-Example of output - already exist date entry
+Example of output - already existing date entry
 
 `HTTP Status Code: 409`
 
@@ -541,7 +541,7 @@ Parameters
 | ---------------- | -------- | ------------------- | ---------------------------- |
 | `overriddenRate` | Yes      | New overridden rate | Any Positive Integer - `500` |
 
-Example of output - update successful
+Example of output - update successfully
 
 `HTTP Status Code: 200`
 
@@ -558,7 +558,7 @@ Example of output - on invalid default rate
 
 ```json
 {
-    "info": "Invalid room rate value, please enter value greater than 0",
+    "info": "Invalid room rate value, please enter a value greater than 0",
     "data": null
 }
 ```
@@ -690,7 +690,7 @@ Discount Type Options
 | `percentage` | Discount in percentage   | Any value greater than 0 & less than 100 |
 
 
-Example of output - when new discount created successfully
+Example of output - when a new discount is created successfully
 
 `HTTP Status Code: 201`
 
@@ -709,7 +709,7 @@ Example of output - on invalid discount type
 
 ```json
 {
-    "info": "Invalid discount type, please choose correct one.",
+    "info": "Invalid discount type, please choose the correct one.",
     "data": null
 }
 ```
@@ -720,7 +720,7 @@ Example of output - on invalid discount value
 
 ```json
 {
-    "info": "Invalid discount value, please enter discount value greater than 0 for fixed and between 0 to 100 for percentage type.",
+    "info": "Invalid discount value, please enter a discount value greater than 0 for fixed and between 0 to 100 for percentage type.",
     "data": null
 }
 ```
@@ -771,7 +771,7 @@ Discount Type Options
 | `percentage` | Discount in percentage   | Any value greater than 0 & less than 100 |
 
 
-Example of output - update successful
+Example of output - update successfully
 
 `HTTP Status Code: 200`
 
@@ -788,7 +788,7 @@ Example of output - on invalid discount type
 
 ```json
 {
-    "info": "Invalid discount type, please choose correct one.",
+    "info": "Invalid discount type, please choose the correct one.",
     "data": null
 }
 ```
@@ -799,7 +799,7 @@ Example of output - on invalid discount value
 
 ```json
 {
-    "info": "Invalid discount value, please enter discount value greater than 0 for fixed and between 0 to 100 for percentage type.",
+    "info": "Invalid discount value, please enter a discount value greater than 0 for fixed and between 0 to 100 for percentage type.",
     "data": null
 }
 ```
@@ -929,7 +929,7 @@ Parameters
 | `discountID` | Yes      | Discount ID | SERIAL INTEGER - `2` |
 
 
-Example of output - when new discount created successfully
+Example of output - when a new discount is created successfully
 
 `HTTP Status Code: 201`
 
@@ -976,7 +976,7 @@ Example of output - on internal error
 ```
 
 
-#### Discounted Room list with lowest price
+#### Discounted Room list with the lowest price
 
 Endpoint
 
@@ -1039,11 +1039,11 @@ https://shrimant-peshawa-8.postman.co/workspace/NPAV-Projects~9557b0b2-2f86-495e
 
 
 ## TODO's
-Below are some of the points we can consider for improving **Reliability**, and **Scalability** of the existing system.
+Below are some points we can consider for improving the existing system's **Reliability**and **Scalability**.
 
-- We can add multi-tenancy here fo hotels.
-- Need to implement the middlewares for _Authentication & Authorization_ purposes.
-- The use of **In-Memory Cache** can speed up the request handling transactions for same responses.
+- We can add multi-tenancy here for hotels.
+- Need to implement the middleware for _Authentication & Authorization_ purposes.
+- Using **In-Memory Cache** can speed up the request handling transactions for the same responses.
 - We can leverage **Asynchronous Architecture** for tasks like _Add Room_ and _Create Discount_ as it can afford delay.
 - We can add more features like.. **Dashboard, Payments, and Notifications**.
 

@@ -28,9 +28,9 @@ const http = {
 const logger = {
 	// messages
 	MESSAGE_NO_DATA: "No data found!",
-	MESSAGE_INVALID_ROOM_RATE: "Invalid room rate value, please enter value greater than 0",
-	MESSAGE_INVALID_DISCOUNT_TYPE: "Invalid discount type, please choose correct one.",
-	MESSAGE_INVALID_DISCOUNT_VALUE: "Invalid discount value, please enter discount value greater than 0 for fixed and between 0 to 100 for percentage type.",
+	MESSAGE_INVALID_ROOM_RATE: "Invalid room rate value, please enter a value greater than 0",
+	MESSAGE_INVALID_DISCOUNT_TYPE: "Invalid discount type, please choose the correct one.",
+	MESSAGE_INVALID_DISCOUNT_VALUE: "Invalid discount value, please enter a discount value greater than 0 for fixed and between 0 to 100 for percentage type.",
 	MESSAGE_ADD_ROOM: "New room added successfully!",
 	MESSAGE_UPDATE_ROOM_RATE: "Room rate updated successfully!",
 	MESSAGE_DELETE_ROOM: "Room deleted successfully!",
