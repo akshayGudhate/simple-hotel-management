@@ -18,13 +18,16 @@ discount.create = (discountName, discountType, discountValue) => postgres.query(
 );
 
 // update discount record
-discount.update = (discountValue, discountID) => postgres.query(
+discount.update = (discountName, discountType, discountValue, discountID) => postgres.query(
     `
     UPDATE discounts
-    SET discount_value = $1
-    WHERE discount_id = $2;
+    SET
+        discount_name = $1,
+        discount_type = $2,
+        discount_value = $3
+    WHERE discount_id = $4;
 	`,
-    [discountValue, discountID]
+    [discountName, discountType, discountValue, discountID]
 );
 
 // delete discount record

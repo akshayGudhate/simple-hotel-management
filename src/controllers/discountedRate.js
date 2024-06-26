@@ -16,11 +16,17 @@ const mapRoomRateWithDiscount = async (req, res) => {
         const { roomRateID, discountID } = req.body;
 
         // map discount to room rate
-        const drrID = (await modelDiscount.mapRate(roomRateID, discountID)).rows[0].room_id;
+        const drrID = (await modelDiscount.mapRate(roomRateID, discountID)).rows[0].drr_id;
 
         // send http response
         return responseHandler(res, projectEnv.http.CODE_201, projectEnv.logger.MESSAGE_MAP_DISCOUNT, { drrID });
     } catch (err) {
+        // if duplicate entry
+        if (err.message.includes(projectEnv.logger.ERROR_INVALID_KEY)) {
+            // send http response
+            return responseHandler(res, projectEnv.http.CODE_409, err.detail, null);
+        };
+
         // send http response
         return responseHandler(res, projectEnv.http.CODE_500, projectEnv.logger.MESSAGE_INTERNAL_ERROR, null, err);
     }

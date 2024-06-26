@@ -19,8 +19,8 @@ const variables = {
 
 // http codes
 const http = {
-	CODE_200: 200, CODE_201: 201, CODE_204: 204,
-	CODE_400: 400, CODE_404: 404,
+	CODE_200: 200, CODE_201: 201,
+	CODE_400: 400, CODE_404: 404, CODE_409: 409,
 	CODE_500: 500
 };
 
@@ -28,8 +28,9 @@ const http = {
 const logger = {
 	// messages
 	MESSAGE_NO_DATA: "No data found!",
-	MESSAGE_INVALID_TYPE: "Invalid discount type, please choose correct one.",
-	MESSAGE_INVALID_VALUE: "Invalid discount value, please enter discount value between 0 to 100.",
+	MESSAGE_INVALID_ROOM_RATE: "Invalid room rate value, please enter value greater than 0",
+	MESSAGE_INVALID_DISCOUNT_TYPE: "Invalid discount type, please choose correct one.",
+	MESSAGE_INVALID_DISCOUNT_VALUE: "Invalid discount value, please enter discount value greater than 0 for fixed and between 0 to 100 for percentage type.",
 	MESSAGE_ADD_ROOM: "New room added successfully!",
 	MESSAGE_UPDATE_ROOM_RATE: "Room rate updated successfully!",
 	MESSAGE_DELETE_ROOM: "Room deleted successfully!",
@@ -48,6 +49,8 @@ const logger = {
 
 	// errors
 	ERROR_DB_OCCURRED: "Database error found!\n",
+	ERROR_DUPLICATE_KEY: "duplicate key value violates unique constraint",
+	ERROR_INVALID_KEY: "violates foreign key constraint",
 	ERROR_SERVER_NOT_STARTED: "Failed to start server!\n",
 
 	// info

@@ -15,6 +15,12 @@ const addRoom = async (req, res) => {
 		// parse details
 		const { name, defaultRate } = req.body;
 
+		// check rate value
+		if (defaultRate <= 0) {
+			// send http response
+			return responseHandler(res, projectEnv.http.CODE_400, projectEnv.logger.MESSAGE_INVALID_ROOM_RATE);
+		};
+
 		// add new room
 		const roomID = (await modelRoomRate.add(name, defaultRate)).rows[0].room_id;
 
@@ -30,6 +36,12 @@ const updateRoomRate = async (req, res) => {
 	try {
 		// parse details
 		const { defaultRate } = req.body;
+
+		// check rate value
+		if (defaultRate <= 0) {
+			// send http response
+			return responseHandler(res, projectEnv.http.CODE_400, projectEnv.logger.MESSAGE_INVALID_ROOM_RATE);
+		};
 
 		// update room rate
 		await modelRoomRate.update(defaultRate, req.params.id);
@@ -48,7 +60,7 @@ const deleteRoom = async (req, res) => {
 		await modelRoomRate.delete(req.params.id);
 
 		// send http response
-		return responseHandler(res, projectEnv.http.CODE_204, projectEnv.logger.MESSAGE_DELETE_ROOM);
+		return responseHandler(res, projectEnv.http.CODE_200, projectEnv.logger.MESSAGE_DELETE_ROOM);
 	} catch (err) {
 		// send http response
 		return responseHandler(res, projectEnv.http.CODE_500, projectEnv.logger.MESSAGE_INTERNAL_ERROR, null, err);

@@ -18,22 +18,28 @@ const createDiscount = async (req, res) => {
 		// check for correct discount type
 		if (!(discountType in projectEnv.allDiscountTypes)) {
 			// send http response
-			return responseHandler(res, projectEnv.http.CODE_400, projectEnv.logger.MESSAGE_INVALID_TYPE);
+			return responseHandler(res, projectEnv.http.CODE_400, projectEnv.logger.MESSAGE_INVALID_DISCOUNT_TYPE);
 		};
 
-		// check discount value
-		if (discountType == projectEnv.allDiscountTypes.percentage && (discountValue < 0 || discountValue >= 100)) {
+		// check discount value less than 0
+		if (discountValue <= 0) {
 			// send http response
-			return responseHandler(res, projectEnv.http.CODE_400, projectEnv.logger.MESSAGE_INVALID_VALUE);
+			return responseHandler(res, projectEnv.http.CODE_400, projectEnv.logger.MESSAGE_INVALID_DISCOUNT_VALUE);
+		}
+
+		// check discount value greater than 100 when its percentage
+		if (discountType == projectEnv.allDiscountTypes.percentage && discountValue >= 100) {
+			// send http response
+			return responseHandler(res, projectEnv.http.CODE_400, projectEnv.logger.MESSAGE_INVALID_DISCOUNT_VALUE);
 		};
 
 		//
 		// create new discount
 		//
-		const roomID = (await modelDiscount.create(discountName, discountType, discountValue)).rows[0].discount_id;
+		const discountID = (await modelDiscount.create(discountName, discountType, discountValue)).rows[0].discount_id;
 
 		// send http response
-		return responseHandler(res, projectEnv.http.CODE_201, projectEnv.logger.MESSAGE_CREATE_DISCOUNT, { roomID });
+		return responseHandler(res, projectEnv.http.CODE_201, projectEnv.logger.MESSAGE_CREATE_DISCOUNT, { discountID });
 	} catch (err) {
 		// send http response
 		return responseHandler(res, projectEnv.http.CODE_500, projectEnv.logger.MESSAGE_INTERNAL_ERROR, null, err);
@@ -43,10 +49,28 @@ const createDiscount = async (req, res) => {
 const updateDiscount = async (req, res) => {
 	try {
 		// parse details
-		const { discountValue } = req.body;
+		const { discountName, discountType, discountValue } = req.body;
+
+		// check for correct discount type
+		if (!(discountType in projectEnv.allDiscountTypes)) {
+			// send http response
+			return responseHandler(res, projectEnv.http.CODE_400, projectEnv.logger.MESSAGE_INVALID_DISCOUNT_TYPE);
+		};
+
+		// check discount value less than 0
+		if (discountValue <= 0) {
+			// send http response
+			return responseHandler(res, projectEnv.http.CODE_400, projectEnv.logger.MESSAGE_INVALID_DISCOUNT_VALUE);
+		}
+
+		// check discount value greater than 100 when its percentage
+		if (discountType == projectEnv.allDiscountTypes.percentage && discountValue >= 100) {
+			// send http response
+			return responseHandler(res, projectEnv.http.CODE_400, projectEnv.logger.MESSAGE_INVALID_DISCOUNT_VALUE);
+		};
 
 		// update discount
-		await modelDiscount.update(discountValue, req.params.id);
+		await modelDiscount.update(discountName, discountType, discountValue, req.params.id);
 
 		// send http response
 		return responseHandler(res, projectEnv.http.CODE_200, projectEnv.logger.MESSAGE_UPDATE_DISCOUNT);
@@ -62,7 +86,7 @@ const deleteDiscount = async (req, res) => {
 		await modelDiscount.delete(req.params.id);
 
 		// send http response
-		return responseHandler(res, projectEnv.http.CODE_204, projectEnv.logger.MESSAGE_DELETE_DISCOUNT);
+		return responseHandler(res, projectEnv.http.CODE_200, projectEnv.logger.MESSAGE_DELETE_DISCOUNT);
 	} catch (err) {
 		// send http response
 		return responseHandler(res, projectEnv.http.CODE_500, projectEnv.logger.MESSAGE_INTERNAL_ERROR, null, err);
