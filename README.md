@@ -2,8 +2,7 @@
 A small project for managing the simple hotels and the rates.
 
 
-### Live App
-
+## Live App
 * Base URL: https://simple-hotel-management.onrender.com
 * Example usage of Live Server API: https://simple-hotel-management.onrender.com/api/v1/room-rate/list
 
